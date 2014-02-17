@@ -83,9 +83,9 @@ unique_positive_occurances.each do |word, freq|
   overall_score += importance if importance > 0
   overall_similarity += similarity if similarity > 0
 
-  puts word+': '+similarity.to_s if similarity > 0.1
+  # puts word+': '+similarity.to_s if similarity > 0.1
 end
 puts '=================='
 puts 'score: '+overall_score.to_s
 puts 'index: '+overall_similarity.to_s
-puts 'combined: '+(overall_similarity*overall_score).to_s
+puts 'combined: '+((overall_similarity**0.5)*overall_score).to_s
