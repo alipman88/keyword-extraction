@@ -64,6 +64,7 @@ unique_positive_occurances = unique_positive_occurances.sort_by {|x,y| y/respons
 unique_positive_occurances.reverse!
 puts '=================='
 overall_score = 0.0
+idf = nil
 
 similar_words = Hash.new(0)
 
@@ -72,31 +73,34 @@ unique_positive_occurances.each do |word, freq|
   pos_correlation = Math.log(1 + responses_sharing_keyword/freq)
   neg_correlation = Math.log(1 + responses_not_sharing_keyword/unique_negative_occurances[word])
 
+  pos_correlation = 0 if pos_correlation == 0
+  neg_correlation = 0 if neg_correlation == 0
+
   pos_similarity = freq/responses_sharing_keyword
   neg_similarity = (unique_negative_occurances[word])/(responses_not_sharing_keyword)
 
-  idf = Math.log(total_lines/responses_sharing_keyword)
+  idf ||= Math.log(total_lines/responses_sharing_keyword)
 
-  importance = (idf) * (pos_correlation - neg_correlation)
+  importance = (pos_correlation - neg_correlation)
   similarity = (freq) * (pos_similarity**2 - neg_similarity)
 
   similar_words[word] = similarity
 
-  overall_score += importance if importance > 0
+  overall_score += importance if importance > 0.001
 
 end
 
 similar_words_array = similar_words.sort_by {|x,y| y }
 similar_words_array.reverse!
-max = similar_words_array[0][1]
-
-# puts max
 
 puts 'similar words:'
 similar_words_array.each do |word,similarity|
-  puts '  '+word if similarity > max / 1000
+  puts '  '+word
 end
 
-puts '=================='
-puts 'meaningfulness: '+overall_score.to_s
+puts ''
+puts 'rarity:              '+idf.round(2).to_s
+puts 'meaningfulness:    x '+overall_score.round(2).to_s
+puts '                   -----------'
+puts 'product:             '+(idf*overall_score).round(2).to_s
 puts ''
