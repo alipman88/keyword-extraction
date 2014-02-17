@@ -27,9 +27,9 @@ puts '=================='
 puts 'word: occurance(%)'
 puts '------------------'
 
-# freq_array.first(50).each {|word, freq| puts word.gsub('_',' ')+': '+(100.0*freq/lines).round(2).to_s}
+freqs_array.first(50).each {|word, freq| puts word.gsub('_',' ')+': '+(100.0*freq/lines).round(2).to_s}
 
-['marijuana','oil','social_security','minimum_wage','keystone_pipeline','water','s_united','citizens_united'].each { |keyword| puts keyword.gsub('_',' ')+': '+(freqs[keyword].to_s) }
+# ['marijuana','oil','social_security','minimum_wage','keystone_pipeline','water','s_united','citizens_united'].each { |keyword| puts keyword.gsub('_',' ')+': '+(freqs[keyword].to_s) }
 
 puts '=================='
 puts 'What word or phrase would you like to learn more about?'
@@ -80,16 +80,9 @@ unique_positive_occurances.each do |word, freq|
 
   overall_score += importance if importance > 0
 
-  similarity = freq*(pos_similarity ** 1 - neg_similarity ** 0.5)
+  similarity = freq*(pos_similarity ** 2 - neg_similarity ** 1)
 
   puts word+': '+similarity.to_s if similarity > 0.1
 end
 puts '=================='
 puts overall_score
-
-  # importance = (freq) * (pos_correlation ** 2 - neg_correlation ** 1)
-
-  # importance = (freq) * (pos_correlation ** 2 - neg_correlation ** 0.25)
-
-  # importance = (positive_occurances[word]) * (pos_correlation ** 2 - neg_correlation)
-  # overall_score += importance
