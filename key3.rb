@@ -1,6 +1,11 @@
 ignored_words = ['']
 
-filename = 'short.txt'
+common_words = [
+  # hundred most common phrases in english language
+  "the", "be", "to", "of", "and", "a", "in", "that", "have", "i", "it", "for", "not", "on", "with", "he", "as", "you", "do", "at", "this", "but", "his", "by", "from", "they", "we", "say", "her", "she", "or", "an", "will", "my", "one", "all", "would", "there", "their", "what", "so", "up", "out", "if", "about", "who", "get", "which", "go", "me", "when", "make", "can", "like", "time", "no", "just", "him", "know", "take", "people", "into", "year", "your", "good", "some", "could", "them", "see", "other", "than", "then", "now", "look", "only", "come", "its", "over", "think", "also", "back", "after", "use", "two", "how", "our", "work", "first", "well", "way", "even", "new", "want", "because", "any", "these", "give", "day", "most", "us"
+]
+
+filename = 'next_order.txt'
 freqs = Hash.new(0)
 
 lines = 0
@@ -27,11 +32,13 @@ words_to_check = []
 
 freqs_array.each do |word, freq|
   percent = (100.0*freq/lines).round(2)
-  if percent > 1
+  if percent > 0.5 && ! word.split('_').any? { |part| part.length <= 2 } && ! common_words.any?{ |common_word| word.split('_').include?(common_word) }
     words_to_check << word
-    # puts word.gsub('_',' ')+': '+percent.to_s
+    puts word.gsub('_',' ')+': '+percent.to_s
   end
 end
+
+puts words_to_check.length
 
 ranked_findings = Hash.new(0)
 
@@ -84,6 +91,6 @@ words_to_check.each do |phrase|
   end
 
   ranked_findings[phrase] = overall_score
-  puts phrase+': '+overall_score.to_s
+  puts '"'+phrase.gsub('_',' ')+'",'+(100.0*freqs[phrase]/lines).round(2).to_s+','+overall_score.round(2).to_s
 
 end
