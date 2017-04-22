@@ -18,7 +18,7 @@ However, having several thousand documents that needed examination, and not havi
 
 <p align=center><img src=https://raw.githubusercontent.com/alipman88/keyword-extraction/master/specificity.png width=500 /></p>
 
-*(Common English words were not removed when generating the above image, to demonstrate the effectiveness of the weighting adjustment compared to raw frequencies.)*
+*The above word cloud includes the 60 words determined to be the most specific or meaningful keywords, with each word's size/shading determined by its frequency. (Common English words were not removed when generating the above image, to demonstrate the effectiveness of the weighting adjustment.)*
 
 The original script was written in Ruby, and as a side-project, re-written in April 2017 in R. (Much of the R code used [this excellent introduction to text mining concepts in R](https://eight2late.wordpress.com/2015/05/27/a-gentle-introduction-to-text-mining-using-r/) for reference.)
 
